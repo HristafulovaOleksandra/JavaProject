@@ -6,12 +6,13 @@ public class Patient {
     private String diagnos;
     private int age;
     private LocalDateTime recordDate;
-    public Patient(String name, String species, String diagnosis, int age)
+    public Patient(String name, String species, String diagnosis, int age, LocalDateTime recordDate)
     {
         this.name = name;
         this.species = species;
         this.diagnos = diagnosis;
         this.age = age;
+        this.recordDate = recordDate;
     }
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
@@ -26,7 +27,7 @@ public class Patient {
     @Override
     public String toString()
     {
-        return "Name: "+name+"Species: "+species+"Diagnos: "+diagnos+"Age: "+age+"\n"+"RecordDate: "+recordDate;
+        return "Name: "+name+" Species: "+species+" Diagnos: "+diagnos+" Age: "+age+"\n"+"RecordDate: "+recordDate;
     }
 
 
