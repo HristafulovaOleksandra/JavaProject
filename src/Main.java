@@ -54,7 +54,9 @@ public class Main {
                 case 5://Find patient
                     System.out.print("Input patient's name to find record: ");
                     String nameFind = scanner.nextLine();
-                    realization.findPatient(nameFind);
+                    System.out.print("Input patient's species to find record: ");
+                    String speciesFind = scanner.nextLine();
+                    realization.findPatient(nameFind,speciesFind);
                     break;
                 case 6://Sort records
                     System.out.println("Sorting:\n1. By alphabet\n2. By age\n3. By record date");
@@ -62,6 +64,7 @@ public class Main {
                     int sortingType = scanner.nextInt();
                     scanner.nextLine();
                     realization.sortRecords(sortingType);
+
                     break;
                 case 7:
                     running = false;

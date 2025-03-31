@@ -47,11 +47,11 @@ public class Realization {
             }
         }
     }
-    public void findPatient(String nameFind)
+    public void findPatient(String nameFind,String speciesFind)
     {
         for(Patient el : patients)
         {
-            if (el.getName().equalsIgnoreCase(nameFind))
+            if (el.getName().equalsIgnoreCase(nameFind) || el.getSpecies().equalsIgnoreCase(speciesFind))
             {
                 System.out.println("Patient found: " + el.toString());
                 break;
