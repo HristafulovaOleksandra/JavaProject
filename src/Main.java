@@ -61,7 +61,7 @@ public class Main {
                     System.out.print("Choose sorting type: ");
                     int sortingType = scanner.nextInt();
                     scanner.nextLine();
-                    //Method
+                    realization.sortRecords(sortingType);
                     break;
                 case 7:
                     running = false;

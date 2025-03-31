@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Realization {
@@ -62,8 +63,30 @@ public class Realization {
             }
         }
     }
-    public void sortRecords()
+    public void sortRecords(int sortingType)
     {
-
+        if (patients.isEmpty())
+        {
+            System.out.println("No patient found");
+            return;
+        }
+        switch (sortingType)
+        {
+            case 1:
+                patients.sort(Comparator.comparing(Patient::getName));
+                System.out.println("Patients sorted by alphabet successfully!");
+                break;
+            case 2:
+                patients.sort(Comparator.comparing(Patient::getAge));
+                System.out.println("Patients sorted by age successfully!");
+                break;
+            case 3:
+                patients.sort(Comparator.comparing(Patient::getRecordDate));
+                System.out.println("Patients sorted by record date successfully!");
+                break;
+            default:
+                System.out.println("Invalid sort type");
+        }
+        showRecords();
     }
 }
