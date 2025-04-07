@@ -13,21 +13,17 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class Realization {
+public class BookAppointmentService {
     private List<Patient> patients = new ArrayList<>();
-    private final String FILE_PATH = "patients.json";
-    Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .create();
-
-    public Realization()
-    {
-        loadFromFile();
+    private final GsonDataSource gsonDataSource ;
+    public BookAppointmentService(GsonDataSource gsonDataSource) {
+        this.gsonDataSource = gsonDataSource;
+        this.patients.addAll(gsonDataSource.loadFromFile());
     }
     public void addPatient(String name,String species,String diagnos,int age,LocalDateTime recordDate )
     {
         patients.add(new Patient(name,species,diagnos,age,recordDate));
-        saveToFile();
+        gsonDataSource.saveToFile(patients);
         System.out.println("New patient was added succsessfully!");
     }
     public void showRecords()
@@ -51,7 +47,7 @@ public class Realization {
             }
         }
         if (found) {
-            saveToFile();
+            gsonDataSource.saveToFile(patients);
             System.out.println("Patient record updated.");
         } else {
             System.out.println("Patient was not found");
@@ -64,7 +60,7 @@ public class Realization {
             if(el.getName().equalsIgnoreCase(nameDelete))
             {
                 patients.remove(el);
-                saveToFile();
+                gsonDataSource.saveToFile(patients);
                 System.out.println("Patient was removed from the list");
                 break;
             }
@@ -117,25 +113,5 @@ public class Realization {
         }
         showRecords();
     }
-    private void saveToFile() {
-        try (FileWriter writer = new FileWriter(FILE_PATH, StandardCharsets.UTF_8)) {
-            gson.toJson(patients, writer);
-        } catch (IOException e) {
-            System.out.println("Error " + e.getMessage());
-        }
-    }
-    private void loadFromFile() {
-        try {
-            File file = new File(FILE_PATH);
-            if (file.exists()) {
-                String json = new String(Files.readAllBytes(Paths.get(FILE_PATH)), StandardCharsets.UTF_8);
-                patients = gson.fromJson(json, new TypeToken<List<Patient>>() {}.getType());
-                if (patients == null) patients = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            System.out.println("Error " + e.getMessage());
-        }
-    }
-
 
 }

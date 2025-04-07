@@ -1,9 +1,14 @@
+import com.google.gson.Gson;
+
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Main {
     public static void main (String[] args) {
-        Realization realization = new Realization();
+        String filePath = "patients.json";
+        Gson gson=new Gson();
+        GsonDataSource gsonDataSource = new GsonDataSource(filePath,gson);
+        BookAppointmentService clinicBookstore = new BookAppointmentService(gsonDataSource);
         Scanner scanner = new Scanner(System.in);
         System.out.println("~~~Choose the action~~~");
         boolean running = true;
@@ -29,10 +34,10 @@ public class Main {
                     System.out.println("Input patient's age: ");
                     int age = scanner.nextInt();
                     LocalDateTime recordDate = LocalDateTime.now();
-                    realization.addPatient(name,species,diagnos,age,recordDate);
+                    clinicBookstore.addPatient(name,species,diagnos,age,recordDate);
                     break;
                 case 2://Show records
-                    realization.showRecords();
+                    clinicBookstore.showRecords();
                     break;
                 case 3://Change record
                     System.out.println("~~~Input data about patient to change the record~~~");
@@ -44,27 +49,26 @@ public class Main {
                     String diagnosisChange = scanner.nextLine();
                     System.out.println("Input NEW patient's age: ");
                     int ageChange = scanner.nextInt();
-                    realization.changeRecord(nameChange,speciesChange,diagnosisChange,ageChange);
+                    clinicBookstore.changeRecord(nameChange,speciesChange,diagnosisChange,ageChange);
                     break;
                 case 4://Delete record
                     System.out.print("Input patient's name to delete record: ");
                     String nameDelete = scanner.nextLine();
-                    realization.deleteRecord(nameDelete);
+                    clinicBookstore.deleteRecord(nameDelete);
                     break;
                 case 5://Find patient
                     System.out.print("Input patient's name to find record: ");
                     String nameFind = scanner.nextLine();
                     System.out.print("Input patient's species to find record: ");
                     String speciesFind = scanner.nextLine();
-                    realization.findPatient(nameFind,speciesFind);
+                    clinicBookstore.findPatient(nameFind,speciesFind);
                     break;
                 case 6://Sort records
                     System.out.println("Sorting:\n1. By alphabet\n2. By age\n3. By record date");
                     System.out.print("Choose sorting type: ");
                     int sortingType = scanner.nextInt();
                     scanner.nextLine();
-                    realization.sortRecords(sortingType);
-
+                    clinicBookstore.sortRecords(sortingType);
                     break;
                 case 7:
                     running = false;
@@ -74,8 +78,6 @@ public class Main {
                     System.out.println("Unavailable choice");
                     choice = scanner.nextInt();
                     scanner.nextLine();
-
-
             }
         }
         scanner.close();
